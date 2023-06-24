@@ -8,6 +8,7 @@
 - JPA
 - Lombok
 - JJWT
+- Maven
 
 
 ## About prokect 
