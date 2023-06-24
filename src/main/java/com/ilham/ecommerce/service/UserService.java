@@ -1,9 +1,9 @@
 package com.ilham.ecommerce.service;
 
-import com.ilham.ecommerce.entity.Pengguna;
+import com.ilham.ecommerce.entity.User;
 import com.ilham.ecommerce.exception.BadRequestException;
 import com.ilham.ecommerce.exception.ResourceNotFoundException;
-import com.ilham.ecommerce.repository.PenggunaRepository;
+import com.ilham.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -11,53 +11,37 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 @Service
-public class PenggunaService {
+public class UserService {
 
     @Autowired
-    private PenggunaRepository penggunaRepository;
+    private UserRepository userRepository;
 
-    public Pengguna findById(String id) {
-        return penggunaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pengguna dengan id " + id + " tidak ditemukan"));
+    public User findById(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pengguna dengan id " + id + " tidak ditemukan"));
     }
 
-    public List<Pengguna> findAll() {
-        return penggunaRepository.findAll();
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
-    public Pengguna create(Pengguna pengguna) {
-        if (!StringUtils.hasText(pengguna.getId())) {
+    public User create(User user) {
+        if (!StringUtils.hasText(user.getId())) {
             throw new BadRequestException("Username harus di isi");
         }
 
-        if (penggunaRepository.existsById(pengguna.getId())) {
-            throw new BadRequestException("Username " + pengguna.getId() + " sudah terdaftar");
+        if (userRepository.existsById(user.getId())) {
+            throw new BadRequestException("Username " + user.getId() + " sudah terdaftar");
         }
-        if (!StringUtils.hasText(pengguna.getEmail())) {
+        if (!StringUtils.hasText(user.getEmail())) {
             throw new BadRequestException("Email harus di isi");
         }
 
-        if (penggunaRepository.existsByEmail(pengguna.getEmail())) {
-            throw new BadRequestException("Email " + pengguna.getEmail() + " sudah terdaftar");
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new BadRequestException("Email " + user.getEmail() + " sudah terdaftar");
         }
 
-        pengguna.setIsAktif(true);
-        return penggunaRepository.save(pengguna);
-    }
-
-    public Pengguna edit(Pengguna pengguna) {
-        if (!StringUtils.hasText(pengguna.getId())) {
-            throw new BadRequestException("Username harus di isi");
-        }
-
-        if (!StringUtils.hasText(pengguna.getEmail())) {
-            throw new BadRequestException("Email harus di isi");
-        }
-
-        return penggunaRepository.save(pengguna);
-    }
-
-    public void deleteById(String id) {
-        penggunaRepository.deleteById(id);
+        user.setIsAktif(true);
+        return userRepository.save(user);
     }
 
 }

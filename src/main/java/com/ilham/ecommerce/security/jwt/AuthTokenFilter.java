@@ -42,6 +42,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
+            System.out.println("AuthTokenFilter");
             logger.error("Gagal: {}", e.getMessage());
         }
 

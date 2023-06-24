@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
-public class Pengguna implements Serializable {
+public class User implements Serializable {
     @Id
     private String id;
     @JsonIgnore
@@ -28,7 +28,7 @@ public class Pengguna implements Serializable {
     @JsonIgnore
     private Boolean isAktif;
 
-    public Pengguna(String username) {
+    public User(String username) {
         this.id = username;
     }
 }

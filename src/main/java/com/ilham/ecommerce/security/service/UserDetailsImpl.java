@@ -1,7 +1,7 @@
 package com.ilham.ecommerce.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ilham.ecommerce.entity.Pengguna;
+import com.ilham.ecommerce.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,12 +34,13 @@ public class UserDetailsImpl implements UserDetails {
         this.roles = roles;
     }
 
-    public static UserDetailsImpl build(Pengguna pengguna) {
-        return new UserDetailsImpl(pengguna.getId(),
-                pengguna.getEmail(),
-                pengguna.getNama(),
-                pengguna.getPassword(),
-                pengguna.getRoles());
+    public static UserDetailsImpl build(
+            User user) {
+        return new UserDetailsImpl(user.getId(),
+                user.getEmail(),
+                user.getNama(),
+                user.getPassword(),
+                user.getRoles());
     }
 
     @Override

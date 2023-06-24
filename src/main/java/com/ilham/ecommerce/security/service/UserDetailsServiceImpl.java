@@ -1,7 +1,7 @@
 package com.ilham.ecommerce.security.service;
 
-import com.ilham.ecommerce.entity.Pengguna;
-import com.ilham.ecommerce.repository.PenggunaRepository;
+import com.ilham.ecommerce.entity.User;
+import com.ilham.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    PenggunaRepository penggunaRepository;
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Pengguna pengguna = penggunaRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("Username "+ username + " tidak ditemukan"));
+        User user = userRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("Username "+ username + " tidak ditemukan"));
 
-        return UserDetailsImpl.build(pengguna);
+        return UserDetailsImpl.build(user);
     }
 }

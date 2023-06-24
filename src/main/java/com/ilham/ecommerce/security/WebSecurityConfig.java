@@ -29,10 +29,14 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors()
-                .and().csrf().disable().exceptionHandling()
+                .and().csrf().disable()
+                .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/auth/**").permitAll()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests().antMatchers("/auth/**").permitAll()
                 .antMatchers("/api/**").permitAll().anyRequest().authenticated();
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

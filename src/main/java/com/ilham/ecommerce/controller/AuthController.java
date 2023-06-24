@@ -1,13 +1,13 @@
 package com.ilham.ecommerce.controller;
 
-import com.ilham.ecommerce.model.JwtResponse;
-import com.ilham.ecommerce.entity.Pengguna;
-import com.ilham.ecommerce.model.LoginRequest;
-import com.ilham.ecommerce.model.SignUpRequest;
+import com.ilham.ecommerce.model.response.JwtResponse;
+import com.ilham.ecommerce.entity.User;
+import com.ilham.ecommerce.model.request.LoginRequest;
+import com.ilham.ecommerce.model.request.SignUpRequest;
 import com.ilham.ecommerce.security.jwt.JwtUtils;
 import com.ilham.ecommerce.security.service.UserDetailsImpl;
 import com.ilham.ecommerce.security.service.UserDetailsServiceImpl;
-import com.ilham.ecommerce.service.PenggunaService;
+import com.ilham.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +28,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    PenggunaService penggunaService;
+    UserService userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -39,7 +39,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -50,15 +50,15 @@ public class AuthController {
         return ResponseEntity.ok().body(new JwtResponse(token, principal.getUsername(), principal.getEmail()));
     }
 
-    @PostMapping("/signup")
-    public Pengguna signup(@RequestBody SignUpRequest request) {
-        Pengguna pengguna = new Pengguna();
-        pengguna.setId(request.getUsername());
-        pengguna.setEmail(request.getEmail());
-        pengguna.setPassword(passwordEncoder.encode(request.getPassword()));
-        pengguna.setNama(request.getNama());
-        pengguna.setRoles("user");
-        Pengguna created = penggunaService.create(pengguna);
+    @PostMapping("/register")
+    public User signup(@RequestBody SignUpRequest request) {
+        User user = new User();
+        user.setId(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setNama(request.getNama());
+        user.setRoles("user");
+        User created = userService.create(user);
         return created;
     }
 }
