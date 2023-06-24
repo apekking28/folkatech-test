@@ -1,6 +1,5 @@
 package com.ilham.ecommerce.controller;
 
-import com.ilham.ecommerce.entity.Kategori;
 import com.ilham.ecommerce.entity.Pengguna;
 import com.ilham.ecommerce.service.PenggunaService;
 import org.springframework.beans.factory.annotation.Autowired;
